@@ -73,5 +73,10 @@
         app:layout_anchor="@id/bottom_app_bar"
         app:srcCompat="@drawable/ic_plus_fab"
         app:tint="#FFFFFF" />
+
+    <include
+        android:id="@+id/loadinglayout_in_main"
+        layout="@layout/fragment_loading_layout" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

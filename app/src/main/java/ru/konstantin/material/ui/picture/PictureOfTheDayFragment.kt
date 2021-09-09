@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProviders
 import coil.api.load
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import ru.konstantin.material.ui.MainActivity
 import ru.konstantin.material.ui.chips.ChipsFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.konstantin.material.R
 import ru.konstantin.material.databinding.MainFragmentBinding
+import ru.konstantin.material.model.ViewState
 
 class PictureOfTheDayFragment : Fragment() {
 
@@ -32,7 +34,7 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.getData()
-            .observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
+            .observe(viewLifecycleOwner, Observer { renderData(it) })
     }
 
     override fun onCreateView(
@@ -62,7 +64,8 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_fav -> toast("Favourite")
-            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
+                ?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
@@ -72,27 +75,43 @@ class PictureOfTheDayFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun renderData(data: PictureOfTheDayData) {
+    private fun renderData(data: ViewState) {
         when (data) {
-            is PictureOfTheDayData.Success -> {
-                val serverResponseData = data.serverResponseData
-                val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
+            is ViewState.Success<*> -> {
+//                if (main.visibility != View.VISIBLE) {
+                    main.visibility = View.VISIBLE
+                    loadinglayout_in_main.visibility = View.GONE
+//                }
+                if ((data.stateData as PODServerResponseData).url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")
                     toast("Link is empty")
                 } else {
                     //showSuccess()
-                    image_view.load(url) {
+                    image_view.load((data.stateData).url) {
                         lifecycle(this@PictureOfTheDayFragment)
                         error(R.drawable.ic_load_error_vector)
                         placeholder(R.drawable.ic_no_photo_vector)
                     }
                 }
             }
-            is PictureOfTheDayData.Loading -> {
+            is ViewState.Loading -> {
                 //showLoading()
+                if (loadinglayout_in_main.visibility != View.VISIBLE) {
+                    loadinglayout_in_main.visibility = View.VISIBLE
+//                    main.visibility = View.GONE
+                }
             }
-            is PictureOfTheDayData.Error -> {
+            is ViewState.Error -> {
+                loadinglayout_in_main.visibility = View.GONE
+                Snackbar.make(
+                    binding.main,
+                    resources.getString(R.string.error_text),
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction(resources.getString(R.string.reload_text)) {
+                        viewModel.getData()
+                    }.show()
+
                 //showError(data.error.message)
                 toast(data.error.message)
             }
