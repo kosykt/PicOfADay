@@ -1,4 +1,4 @@
-package ru.konstantin.material.ui.chips
+package ru.konstantin.material.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
