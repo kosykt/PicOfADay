@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_baseline_blur_on_24"
+        android:id="@+id/bottom_view_day_before"
+        android:title="@string/day_before" />
+
+    <item
+        android:icon="@drawable/ic_baseline_blur_on_24"
+        android:id="@+id/bottom_view_yesterday"
+        android:title="@string/yesterday" />
+
+    <item
+        android:icon="@drawable/ic_baseline_blur_on_24"
+        android:id="@+id/bottom_view_today"
+        android:title="@string/today" />
+</menu>

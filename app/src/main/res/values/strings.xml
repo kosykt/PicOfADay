@@ -15,4 +15,7 @@
     <string name="tap_screen_for_description">Tap screen for description</string>
     <string name="default_theme">Default theme</string>
     <string name="new_theme">New theme</string>
+    <string name="day_before">Day Before</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
 </resources>
