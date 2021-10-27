@@ -7,9 +7,12 @@
     <string name="settings">settings</string>
     <string name="search">Search</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_text">Loading error</string>
     <string name="reload_text">Reload</string>
     <string name="testing_button">Testing button</string>
     <string name="tap_screen_for_description">Tap screen for description</string>
+    <string name="default_theme">Default theme</string>
+    <string name="new_theme">New theme</string>
 </resources>

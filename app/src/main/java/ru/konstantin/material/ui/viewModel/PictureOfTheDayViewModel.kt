@@ -1,4 +1,4 @@
-package ru.konstantin.material.ui.picture
+package ru.konstantin.material.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.konstantin.material.BuildConfig
 import ru.konstantin.material.model.ViewState
+import ru.konstantin.material.ui.picture.PODRetrofitImpl
+import ru.konstantin.material.ui.picture.PODServerResponseData
 
 class PictureOfTheDayViewModel(
     private val liveDataForViewToObserve: MutableLiveData<ViewState> = MutableLiveData(),

@@ -38,16 +38,6 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/input_layout"
-                android:gravity="bottom"
-                android:text="@string/tap_screen_for_description"
-                />
-
             <ru.konstantin.material.util.EquilateralImageView
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
@@ -57,15 +47,26 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/help_tip"
                 app:srcCompat="@drawable/ic_no_photo_vector" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/image_desc"
+                android:id="@+id/image_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/image_view"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/help_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_layout"
+                android:gravity="bottom"
+                android:text="@string/tap_screen_for_description"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -74,6 +75,7 @@
     <include
         android:id="@+id/bottom_sheet_container"
         layout="@layout/bottom_sheet_layout" />
+
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -102,3 +104,4 @@
         layout="@layout/fragment_loading_layout" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
