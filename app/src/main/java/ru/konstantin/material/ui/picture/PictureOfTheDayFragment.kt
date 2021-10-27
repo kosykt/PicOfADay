@@ -47,13 +47,17 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        setBottomSheetBehavior(binding.bottomSheetContainer.root, BottomSheetBehavior.STATE_COLLAPSED)
         input_layout.setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${input_edit_text.text.toString()}")
             })
         }
         setBottomAppBar(view)
+
+        binding.imageView.setOnClickListener {
+            hideOrShowBottomSheet()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -78,15 +82,17 @@ class PictureOfTheDayFragment : Fragment() {
     private fun renderData(data: ViewState) {
         when (data) {
             is ViewState.Success<*> -> {
-//                if (main.visibility != View.VISIBLE) {
-                    main.visibility = View.VISIBLE
-                    loadinglayout_in_main.visibility = View.GONE
-//                }
+                main.visibility = View.VISIBLE
+                loadinglayout_in_main.visibility = View.GONE
                 if ((data.stateData as PODServerResponseData).url.isNullOrEmpty()) {
-                    //showError("Сообщение, что ссылка пустая")
                     toast("Link is empty")
                 } else {
-                    //showSuccess()
+                    binding.imageDesc.text = "Photo date: ${(data.stateData).date}"
+
+                    binding.bottomSheetContainer.bottomSheetDescriptionHeader.text = (data.stateData).title
+                    binding.bottomSheetContainer.bottomSheetDescription.text = (data.stateData).explanation
+//                    setBottomSheetBehavior(binding.bottomSheetContainer.root, BottomSheetBehavior.STATE_HALF_EXPANDED)
+
                     image_view.load((data.stateData).url) {
                         lifecycle(this@PictureOfTheDayFragment)
                         error(R.drawable.ic_load_error_vector)
@@ -95,10 +101,8 @@ class PictureOfTheDayFragment : Fragment() {
                 }
             }
             is ViewState.Loading -> {
-                //showLoading()
                 if (loadinglayout_in_main.visibility != View.VISIBLE) {
                     loadinglayout_in_main.visibility = View.VISIBLE
-//                    main.visibility = View.GONE
                 }
             }
             is ViewState.Error -> {
@@ -112,7 +116,6 @@ class PictureOfTheDayFragment : Fragment() {
                         viewModel.getData()
                     }.show()
 
-                //showError(data.error.message)
                 toast(data.error.message)
             }
         }
@@ -140,9 +143,23 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
+    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout, state: Int) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.state = state
+    }
+
+    private fun hideOrShowBottomSheet() {
+        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_COLLAPSED) {
+            setBottomSheetBehavior(
+                binding.bottomSheetContainer.root,
+                BottomSheetBehavior.STATE_COLLAPSED
+            )
+        } else {
+            setBottomSheetBehavior(
+                binding.bottomSheetContainer.root,
+                BottomSheetBehavior.STATE_HALF_EXPANDED
+            )
+        }
     }
 
     private fun Fragment.toast(string: String?) {
