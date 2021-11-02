@@ -27,5 +27,6 @@
 
     <include
         android:id="@+id/loadinglayout_in_bottom_navigatio_fragment"
-        layout="@layout/fragment_loading_layout" />
+        layout="@layout/fragment_loading_layout"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/app_bar_fav"
-        android:icon="@drawable/ic_favourite_menu"
+        android:id="@+id/app_bar_save_item"
+        android:icon="@drawable/ic_baseline_save_alt_24"
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/app_bar_view_3_days"
+        android:icon="@drawable/view_3_days"
         android:title="@string/favourite"
         app:showAsAction="ifRoom" />
 
@@ -12,5 +18,11 @@
         android:id="@+id/app_bar_settings"
         android:icon="@drawable/ic_settings_menu"
         android:title="@string/settings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/app_bar_fav"
+        android:icon="@drawable/ic_favourite_menu"
+        android:title="@string/favourite"
         app:showAsAction="ifRoom" />
 </menu>

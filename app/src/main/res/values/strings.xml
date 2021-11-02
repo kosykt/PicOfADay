@@ -18,4 +18,5 @@
     <string name="day_before">Day Before</string>
     <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
+    <string name="save">Save</string>
 </resources>

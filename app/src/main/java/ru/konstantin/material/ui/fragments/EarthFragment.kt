@@ -61,7 +61,7 @@ class EarthFragment : Fragment() {
         }
     }
 
-    fun scaleImageAndBack(){
+    private fun scaleImageAndBack(){
         day_before_yeasterday_image_view.setOnClickListener {
             textIsVisible = !textIsVisible
             TransitionManager.beginDelayedTransition(
