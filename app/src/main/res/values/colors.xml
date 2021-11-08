@@ -14,4 +14,5 @@
     <color name="background_for_line">#3F51B5</color>
     <color name="black">#090909</color>
     <color name="dark_green">#17330B</color>
+    <color name="loadingBackground">#80FFFFFF</color>
 </resources>

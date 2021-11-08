@@ -9,32 +9,46 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import coil.api.load
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
+import ru.konstantin.beautybox.repository.ItemRepository
 import ru.konstantin.material.R
 import ru.konstantin.material.databinding.MainFragmentBinding
+import ru.konstantin.material.model.Item
 import ru.konstantin.material.model.ViewState
+import ru.konstantin.material.repository.ItemRepositoryImpl
 import ru.konstantin.material.ui.MainActivity
 import ru.konstantin.material.ui.picture.BottomNavigationDrawerFragment
 import ru.konstantin.material.ui.picture.PODServerResponseData
+import ru.konstantin.material.ui.viewModel.ItemListViewModel
 import ru.konstantin.material.ui.viewModel.PictureOfTheDayViewModel
+import java.util.*
 
 var THEME_ID = 0
 var BUTTON_ID = 0
 
 class PictureOfTheDayFragment : Fragment() {
 
-    var _binding: MainFragmentBinding? = null
-    val binding get() = _binding!!
+    private var _binding: MainFragmentBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
     }
+
+    lateinit var favItem: Item
+
+    private val itemListViewModel: ItemListViewModel by lazy {
+        ViewModelProvider(this).get(ItemListViewModel::class.java)
+    }
+
+//    val repository: ItemRepository = ItemRepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +87,19 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.app_bar_fav -> activity?.let { startActivity(Intent(it, BottomNavigationFragment::class.java)) }
+            R.id.app_bar_save_item -> { /*repository.addItem(Item(0,"wsd", "Desc", Date(), "https://...."))*/ println(
+                "SAVE..."
+            )
+                itemListViewModel.saveItem(favItem)
+            }
+            R.id.app_bar_view_3_days -> activity?.let {
+                startActivity(
+                    Intent(
+                        it,
+                        BottomNavigationFragment::class.java
+                    )
+                )
+            }
             R.id.app_bar_settings -> {
                 val bundle = Bundle()
                 bundle.putInt(SettingPropertiesFragment.BUNDLE_THEME_ID, THEME_ID)
@@ -84,6 +110,15 @@ class PictureOfTheDayFragment : Fragment() {
                         R.id.container, SettingPropertiesFragment.newInstance(
                             Bundle(bundle)
                         )
+                    )
+                    ?.addToBackStack(null)
+                    ?.commit()
+            }
+            R.id.app_bar_fav -> {
+                activity
+                    ?.supportFragmentManager?.beginTransaction()
+                    ?.replace(
+                        R.id.container, FavoriteItemsFragment.newInstance()
                     )
                     ?.addToBackStack(null)
                     ?.commit()
@@ -106,6 +141,12 @@ class PictureOfTheDayFragment : Fragment() {
                 if ((data.stateData as PODServerResponseData).url.isNullOrEmpty()) {
                     toast("Link is empty")
                 } else {
+                    favItem = Item(0,
+                        data.stateData.title?:"",
+                        data.stateData.explanation,
+                        Date(),
+                        data.stateData.url
+                        )
                     binding.imageDate.text = "Photo date: ${(data.stateData).date}"
 
                     binding.bottomSheetContainer.bottomSheetDescriptionHeader.text =
@@ -199,4 +240,8 @@ class PictureOfTheDayFragment : Fragment() {
         _binding = null
         super.onDestroy()
     }
+}
+
+interface OnItemViewClickListener {
+    fun onItemViewClick(item: Item)
 }
