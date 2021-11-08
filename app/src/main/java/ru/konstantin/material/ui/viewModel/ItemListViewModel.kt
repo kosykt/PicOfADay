@@ -17,7 +17,6 @@ class ItemListViewModel(private val itemRepository: ItemRepositoryImpl = ItemRep
     }
 
     fun getAllItems() {
-//        itemLiveData.postValue(ViewState.Loading)
         itemLiveData.value = ViewState.Success(itemRepository.getAllItems())
     }
 

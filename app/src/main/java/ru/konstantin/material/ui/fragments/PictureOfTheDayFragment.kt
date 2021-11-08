@@ -16,12 +16,10 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
-import ru.konstantin.beautybox.repository.ItemRepository
 import ru.konstantin.material.R
 import ru.konstantin.material.databinding.MainFragmentBinding
 import ru.konstantin.material.model.Item
 import ru.konstantin.material.model.ViewState
-import ru.konstantin.material.repository.ItemRepositoryImpl
 import ru.konstantin.material.ui.MainActivity
 import ru.konstantin.material.ui.picture.BottomNavigationDrawerFragment
 import ru.konstantin.material.ui.picture.PODServerResponseData

@@ -3,7 +3,7 @@ package ru.konstantin.material.app
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import ru.konstantin.beautybox.room.ItemDataBase
+import ru.konstantin.material.room.ItemDataBase
 import ru.konstantin.material.room.ItemDao
 import java.lang.IllegalStateException
 

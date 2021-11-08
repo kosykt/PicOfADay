@@ -1,4 +1,4 @@
-package ru.konstantin.beautybox.room
+package ru.konstantin.material.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

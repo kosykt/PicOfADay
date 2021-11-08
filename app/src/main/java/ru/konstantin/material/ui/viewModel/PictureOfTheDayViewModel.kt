@@ -10,7 +10,6 @@ import ru.konstantin.material.BuildConfig
 import ru.konstantin.material.model.ViewState
 import ru.konstantin.material.ui.picture.PODRetrofitImpl
 import ru.konstantin.material.ui.picture.PODServerResponseData
-import ru.konstantin.material.ui.picture.PictureOfTheDayAPI
 
 class PictureOfTheDayViewModel(
     private val liveDataForViewToObserve: MutableLiveData<ViewState> = MutableLiveData(),
@@ -23,7 +22,6 @@ class PictureOfTheDayViewModel(
     }
 
     private fun sendServerRequest() {
-//        liveDataForViewToObserve.value = ViewState.Loading
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
             ViewState.Error(Throwable("You need API key"))
