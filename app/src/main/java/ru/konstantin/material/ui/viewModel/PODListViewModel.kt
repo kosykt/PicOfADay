@@ -12,27 +12,32 @@ import ru.konstantin.material.ui.picture.PODRetrofitImpl
 import ru.konstantin.material.ui.picture.PODServerResponseData
 import ru.konstantin.material.ui.picture.PictureOfTheDayAPI
 
-class PictureOfTheDayViewModel(
-    private val liveDataForViewToObserve: MutableLiveData<ViewState> = MutableLiveData(),
+class PODListViewModel(
+    val liveDataForViewToObserve: MutableLiveData<ViewState> = MutableLiveData(),
     private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
-): ViewModel() {
+) : ViewModel() {
 
-    fun getData(): LiveData<ViewState> {
-        sendServerRequest()
+    fun getData(startDate: String, endDate: String): LiveData<ViewState> {
+        sendServerRequestGetPODList(startDate, endDate)
         return liveDataForViewToObserve
     }
 
-    private fun sendServerRequest() {
-//        liveDataForViewToObserve.value = ViewState.Loading
+    private fun sendServerRequestGetPODList(startDate: String, endDate: String) {
+        liveDataForViewToObserve.value = ViewState.Loading
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
             ViewState.Error(Throwable("You need API key"))
         } else {
-            retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey).enqueue(object :
-                Callback<PODServerResponseData> {
+//            val retrofit = retrofitImpl.getRetrofitImpl().getPictureListByDateInterval(apiKey, "2021-09-21", "2021-09-23")
+            val retrofit = retrofitImpl.getRetrofitImplPODList()
+
+            val service: PictureOfTheDayAPI = retrofit.create(PictureOfTheDayAPI::class.java)
+            val call: Call<List<PODServerResponseData>> =
+                service.getPictureListByDateInterval(startDate, endDate, apiKey)
+            call.enqueue(object : Callback<List<PODServerResponseData>?> {
                 override fun onResponse(
-                    call: Call<PODServerResponseData>,
-                    response: Response<PODServerResponseData>
+                    call: Call<List<PODServerResponseData>?>,
+                    response: Response<List<PODServerResponseData>?>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         liveDataForViewToObserve.value =
@@ -49,9 +54,7 @@ class PictureOfTheDayViewModel(
                     }
                 }
 
-                override fun onFailure(call: Call<PODServerResponseData>, t: Throwable) {
-                    liveDataForViewToObserve.value = ViewState.Error(t)
-                }
+                override fun onFailure(call: Call<List<PODServerResponseData>?>, t: Throwable) {}
             })
         }
     }

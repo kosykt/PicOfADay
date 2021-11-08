@@ -73,7 +73,7 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.app_bar_fav -> toast("Favourite")
+            R.id.app_bar_fav -> activity?.let { startActivity(Intent(it, BottomNavigationFragment::class.java)) }
             R.id.app_bar_settings -> {
                 val bundle = Bundle()
                 bundle.putInt(SettingPropertiesFragment.BUNDLE_THEME_ID, THEME_ID)
