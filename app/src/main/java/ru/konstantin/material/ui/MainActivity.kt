@@ -6,6 +6,7 @@ import ru.konstantin.material.databinding.MainActivityBinding
 import ru.konstantin.material.ui.fragments.PictureOfTheDayFragment
 import ru.konstantin.material.ui.fragments.THEME_ID
 
+//start branch 8
 class MainActivity : AppCompatActivity() {
 
     private var _binding: MainActivityBinding? = null
