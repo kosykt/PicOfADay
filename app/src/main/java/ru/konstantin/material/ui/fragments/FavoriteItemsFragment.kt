@@ -16,12 +16,7 @@ import ru.konstantin.material.ui.show
 import ru.konstantin.material.ui.showSnackBar
 import ru.konstantin.material.ui.viewModel.ItemListViewModel
 
-
-interface RecyclerViewClickListener {
-    fun recyclerViewListClicked(v: View?, position: Int)
-}
-
-class FavoriteItemsFragment : Fragment(), RecyclerViewClickListener {
+class FavoriteItemsFragment : Fragment() {
 
     private var _binding: FragmentFavoriteItemsBinding? = null
     private val binding get() = _binding!!
@@ -32,8 +27,6 @@ class FavoriteItemsFragment : Fragment(), RecyclerViewClickListener {
     private val adapter: ItemAdapter by lazy {
         ItemAdapter()
     }
-
-    private lateinit var bundle: Bundle
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,17 +57,6 @@ class FavoriteItemsFragment : Fragment(), RecyclerViewClickListener {
         })
         with(binding) {
             mainFragmentRecyclerView.adapter = adapter
-//            addNewItem.setOnClickListener {
-//                val manager = activity?.supportFragmentManager
-//                bundle = Bundle()
-//                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, Item(0, "wertyui", "Description", Date() , "https://yandex.ru"))
-//                manager?.let {
-//                    manager.beginTransaction()
-//                        .replace(R.id.container, EarthFragment.newInstance(bundle))
-//                        .addToBackStack("")
-//                        .commitAllowingStateLoss()
-//                }
-//            }
         }
         itemListViewModel.getData().observe(viewLifecycleOwner) { renderItemListData(it) }
         itemListViewModel.getAllItems()
@@ -108,14 +90,9 @@ class FavoriteItemsFragment : Fragment(), RecyclerViewClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-//        adapter.removeOnItemViewClickListener()
     }
 
     companion object {
         fun newInstance() = FavoriteItemsFragment()
-    }
-
-    override fun recyclerViewListClicked(v: View?, position: Int) {
-        println("Click")
     }
 }

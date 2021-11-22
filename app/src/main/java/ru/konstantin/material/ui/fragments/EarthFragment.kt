@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.konstantin.material.R
 import ru.konstantin.material.databinding.FragmentEarthBinding
-import ru.konstantin.material.ui.picture.PODServerResponseData
+import ru.konstantin.material.model.Item
 
 class EarthFragment : Fragment() {
 
@@ -39,9 +39,9 @@ class EarthFragment : Fragment() {
     }
 
     private fun fillFields() {
-        val photosAndDescriptions = arguments?.getParcelable<PODServerResponseData>(BUNDLE_EXTRA)
-        binding.dayBeforeYeasterdayDescription.text = photosAndDescriptions?.explanation
-        day_before_yeasterday_image_view.load(photosAndDescriptions?.url) {
+        val photosAndDescriptions = arguments?.getParcelable<Item>(BUNDLE_EXTRA)
+        binding.dayBeforeYeasterdayDescription.text = photosAndDescriptions?.description
+        day_before_yeasterday_image_view.load(photosAndDescriptions?.imageUrl) {
             lifecycle(this@EarthFragment)
             error(R.drawable.ic_load_error_vector)
             placeholder(R.drawable.ic_no_photo_vector)

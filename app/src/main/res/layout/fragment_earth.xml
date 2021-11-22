@@ -30,6 +30,7 @@
                 app:srcCompat="@drawable/ic_no_photo_vector" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:fontFamily="@font/cherry_swash"
                 android:id="@+id/day_before_yeasterday_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

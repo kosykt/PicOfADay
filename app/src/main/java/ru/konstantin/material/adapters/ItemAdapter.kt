@@ -42,10 +42,14 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Item){
+            binding.root.setOnClickListener {
+                onItemViewClickListener?.onItemViewClick(data)
+            }
             binding.apply {
                 itemId.text = data.id.toString()
                 itemTitle.text = data.title
             }
+
         }
     }
 

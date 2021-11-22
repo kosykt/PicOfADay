@@ -14,17 +14,7 @@ class ItemRepositoryImpl(private val localDataSource: ItemDao): ItemRepository {
 
     private var itemList = mutableListOf<Item>()
 
-//    override fun getAllItems(): List<Item> {
-//        with(itemList) {
-//            add(Item(111111111, "Title 1", "BeautyBox ver.1",  Date(), "https://rt.ru"))
-//            add(Item(333, "Title 2", "BeautyBox ver.2",  Date(), "https://rt.ru"))
-//            add(Item(444, "Title 3", "BeautyBox ver.3",  Date(), "https://rt.ru"))
-//        }
-//        return itemList
-//    }
-
     override fun addItem(item: Item) {
-//        return Item((1..999999999L).random(),"https://rt76utyhbfdvf.ru", "BeautyBox ver.10", (1..99999).random(), Date())
         localDataSource.insert(Mapping().convertItemToEntity(item))
     }
 

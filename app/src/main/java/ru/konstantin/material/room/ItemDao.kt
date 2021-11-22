@@ -7,9 +7,6 @@ interface ItemDao {
     @Query("SELECT * FROM ItemEntity")
     fun all(): List<ItemEntity>
 
-//    @Query("SELECT * FROM ItemEntity WHERE name LIKE :name")
-//    fun getDataByWord(name: String): List<ItemEntity>
-
     @Query("SELECT * FROM ItemEntity WHERE id=:id")
     fun getDataByWord(id: Long): ItemEntity
 

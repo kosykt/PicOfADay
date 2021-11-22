@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_bottom_navigation.*
 import ru.konstantin.material.R
 import ru.konstantin.material.databinding.FragmentBottomNavigationBinding
+import ru.konstantin.material.model.Mapping
 import ru.konstantin.material.model.ViewState
 import ru.konstantin.material.ui.picture.PODServerResponseData
 import ru.konstantin.material.ui.viewModel.PODListViewModel
@@ -52,28 +53,28 @@ class BottomNavigationFragment : AppCompatActivity() {
                         when (item.itemId) {
                             R.id.bottom_view_day_before -> {
 
-                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, photos[0])
+                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, Mapping().convertPODServerResponseDataToItem(photos[0]))
                                 supportFragmentManager.beginTransaction()
                                     .replace(R.id.activity_api_bottom_container, EarthFragment.newInstance(bundle))
                                     .commitAllowingStateLoss()
                                 true
                             }
                             R.id.bottom_view_yesterday -> {
-                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, photos[1])
+                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, Mapping().convertPODServerResponseDataToItem(photos[1]))
                                 supportFragmentManager.beginTransaction()
                                     .replace(R.id.activity_api_bottom_container, EarthFragment.newInstance(bundle))
                                     .commitAllowingStateLoss()
                                 true
                             }
                             R.id.bottom_view_today -> {
-                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, photos[2])
+                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, Mapping().convertPODServerResponseDataToItem(photos[2]))
                                 supportFragmentManager.beginTransaction()
                                     .replace(R.id.activity_api_bottom_container, EarthFragment.newInstance(bundle))
                                     .commitAllowingStateLoss()
                                 true
                             }
                             else -> {
-                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, photos[0])
+                                bundle.putParcelable(EarthFragment.BUNDLE_EXTRA, Mapping().convertPODServerResponseDataToItem(photos[0]))
                                 supportFragmentManager.beginTransaction()
                                     .replace(R.id.activity_api_bottom_container, EarthFragment.newInstance(bundle))
                                     .commitAllowingStateLoss()
